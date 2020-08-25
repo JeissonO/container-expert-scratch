@@ -1,0 +1,25 @@
+FROM alpine
+
+#? Comandos que generan capas: RUN, COPY, ADD, FROM
+WORKDIR /app
+
+#ADD vs COPY
+COPY myapp.sh /app/
+RUN ls /app && chmod +x myapp.sh && apk add --update bash
+
+
+#! Option 1: No recomendado usando solo CMD la cual puede sobreescribirse
+#CMD ["./myapp.sh"]
+
+#? Option 1: Recomendado para minimizar el riesgo de sobreescribir el CMD
+CMD ["./myapp.sh"]
+ENTRYPOINT [ "bash" ] ENTRYPOINT + CMD
+
+#? Option 2: ENTRYPOINT es el comando por defecto que se ejecuta cuando se instancia la imagen
+#ENTRYPOINT [ "bash" , "myapp.sh"]
+
+
+
+#? Comandos de docker para compilar y correr la imagen
+# sudo docker build -t "myapp:v1.0" .
+# sudo docker run -it --name myapp myapp:v1.0
