@@ -17,4 +17,4 @@ ENTRYPOINT  ["/usr/local/bin/backend"]
 
 # sudo docker build -t "bootcampgo:v1.0" .
 # sudo docker run -it --name bootcampgo bootcampgo:v1.0
-# sudo docker run --rm -it --name bootcampgo bootcampgo:v1.0
+# sudo docker run --rm -p 8081:8080 -it --name bootcampgo bootcampgo:v1.0

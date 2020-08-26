@@ -20,4 +20,4 @@ ENTRYPOINT [ "pm2-docker", "app.js" ]
 
 # sudo docker build -t "bootcampnodejs:v1.0" .
 # sudo docker run -it --name bootcampnodejs bootcampnodejs:v1.0
-# sudo docker run --rm -it --name bootcampnodejs bootcampnodejs:v1.0
+# sudo docker run --rm -p 8082:8080 -it --name bootcampnodejs bootcampnodejs:v1.0
