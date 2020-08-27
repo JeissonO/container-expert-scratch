@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   python:
-    image: ${DOCKER_REPO:-jeissonosorio}/${PROJECT_LANG:-python}:v1.0
+    image: ${DOCKER_REPO:-jeissonosorio}/${PROJECT_LANG:-python}:v${VERSION:-lastes}
     build:
       context: src/${PROJECT_LANG:-python}
     ports:
@@ -10,15 +10,15 @@ services:
       - /tmp/dockervolume:/tmp/
   
   go:
-    image: ${DOCKER_REPO:-jeissonosorio}/go:v1.0
+    image: ${DOCKER_REPO:-jeissonosorio}/go:v${VERSION:-lastes}
     build:
       context: src/go
     ports:
       - 8081:8080
   
-#  nodejs:
-#    image: ${DOCKER_REPO:-jeissonosorio}/nodejs:v1.0
-#    build:
-#      context: src/nodejs
-#    ports:
-#      - 8082:8080
+  nodejs:
+    image: ${DOCKER_REPO:-jeissonosorio}/nodejs:v${VERSION:-lastes}
+    build:
+      context: src/nodejs
+    ports:
+      - 8082:8080
