@@ -1,24 +1,49 @@
 version: "3.7"
 services:
+  menu:
+    image: ${DOCKER_REPO:-jeissonosorio}/nginx:v${VERSION:-1.0}
+    build:
+      context: src/nginx
+    deploy:
+      replicas: 1
+    ports:
+      - 80:80
+
   python:
-    image: ${DOCKER_REPO:-jeissonosorio}/${PROJECT_LANG:-python}:v${VERSION:-lastes}
+    image: ${DOCKER_REPO:-jeissonosorio}/${PROJECT_LANG:-python}:v${VERSION:-1.0}
+    init: true
+    environment:
+      NEXT_URL: "http://nodejs:8080/api"
+      REDIS_HOST: "redis"
     build:
       context: src/${PROJECT_LANG:-python}
+    deploy:
+      replicas: 1
     ports:
       - ${EXPOSE_PORT:-8080}:8080
     volumes:
       - /tmp/dockervolume:/tmp/
-  
-  go:
-    image: ${DOCKER_REPO:-jeissonosorio}/go:v${VERSION:-lastes}
-    build:
-      context: src/go
-    ports:
-      - 8081:8080
-  
+
   nodejs:
-    image: ${DOCKER_REPO:-jeissonosorio}/nodejs:v${VERSION:-lastes}
+    image: ${DOCKER_REPO:-jeissonosorio}/nodejs:v${VERSION:-1.0}
+    init: true
+    environment:
+      NEXT_URL: "http://go:8080/api"
     build:
       context: src/nodejs
+    deploy:
+      replicas: 1
+    ports:
+      - 8081:8080
+
+  go:
+    image: ${DOCKER_REPO:-jeissonosorio}/go:v${VERSION:-1.0}
+    build:
+      context: src/go
+    deploy:
+      replicas: 2
     ports:
       - 8082:8080
+
+  redis:
+    image: "redis:alpine"
