@@ -1,21 +1,4 @@
 ---
-kind: Service
-apiVersion: v1
-metadata:
-  name:  kontinu-app
-  annotations:
-    description: "mi servicio"
-
-spec:
-  selector:
-    app: kontinu-app
-  type:  LoadBalancer
-  ports:
-  - name:  http
-    port:  80
-    targetPort:  http
-...
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,7 +13,7 @@ spec:
       maxSurge: 1
       maxUnavailable: 1
 
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels: #! && (AND)
       app: kontinu-app
@@ -75,4 +58,3 @@ spec:
           containerPort: 8080
 
 ...
-
